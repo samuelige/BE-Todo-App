@@ -1,0 +1,40 @@
+const express = require('express');
+const logger = require('morgan');
+const cors = require('cors');
+const dotenv = require('dotenv');
+dotenv.config();
+
+const pool = require("./db_config/database");
+const notfoundMiddleware = require('./middleware/notfound');
+const connectDB = require('./db_config/database');
+
+
+
+const app = express();
+
+app.use(cors());
+app.use(logger('dev'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
+
+
+
+
+//test route
+app.get('/v1', (req, res, next) => {
+    res.send('Hello World');
+});
+
+//CRUD routes
+app.use('/v1', require('./routes/todo_routes'));
+
+app.use(notfoundMiddleware);
+
+
+app.listen(3000, () => {
+    console.log('Server started on port 3000');
+})
+
+// connect to PostgreSQL server
+connectDB();
