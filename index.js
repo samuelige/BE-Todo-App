@@ -4,10 +4,9 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 dotenv.config();
 
-const pool = require("./db_config/database");
+
 const notfoundMiddleware = require('./middleware/notfound');
 const connectDB = require('./db_config/database');
-
 
 
 const app = express();
@@ -16,9 +15,6 @@ app.use(cors());
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-
-
-
 
 
 //test route
