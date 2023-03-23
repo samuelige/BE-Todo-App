@@ -3,4 +3,4 @@ const notFound = (req, res, next) => {
     next();
 };
 
-module.exports = notFound;
+module.exports = {notFound};

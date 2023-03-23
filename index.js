@@ -5,8 +5,9 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 
-const notfoundMiddleware = require('./middleware/notfound');
+// const notfoundMiddleware = require('./middleware/notfound');
 const connectDB = require('./db_config/database');
+const { notFound } = require('./middleware/notFound');
 
 
 const app = express();
@@ -15,6 +16,9 @@ app.use(cors());
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+app.use(notFound)
+
 
 
 //test route
@@ -25,7 +29,7 @@ app.get('/app/v1', (req, res, next) => {
 //CRUD routes
 app.use('/app/v1', require('./routes/todo_routes'));
 
-app.use(notfoundMiddleware);
+
 
 
 app.listen(3000, () => {
