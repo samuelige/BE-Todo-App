@@ -18,12 +18,12 @@ app.use(express.urlencoded({ extended: false }));
 
 
 //test route
-app.get('/v1', (req, res, next) => {
+app.get('/app/v1', (req, res, next) => {
     res.send('Hello World');
 });
 
 //CRUD routes
-app.use('/v1', require('./routes/todo_routes'));
+app.use('/app/v1', require('./routes/todo_routes'));
 
 app.use(notfoundMiddleware);
 

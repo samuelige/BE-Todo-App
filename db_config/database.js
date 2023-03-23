@@ -1,4 +1,4 @@
-const client = require(".");
+const client = require("./index");
 
 const connectDB = async () => {
     client.connect(function(err) {
