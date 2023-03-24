@@ -33,7 +33,14 @@ const getTodo = async (req, res) => {
             queryResult = request.rows;
         } else {
             const request = await client.query(`SELECT * from todos WHERE id = $1`, [req.params.id]);
-            queryResult = request.rows;
+            if(request.rows.length) {
+                queryResult = request.rows;
+            } else {
+                return res.status(400).json({
+                    msg: `No item found with id : ${req.params.id}`
+                });
+            }
+            
         }
 
         return res.status(200).json({
@@ -53,9 +60,7 @@ const updateTodo = async (req, res) => {
             message: `Updated a todo successfully`
         });
     } catch (error) {
-        return res.status(500).json({
-            error: 'Error on updateTodo' + error
-        })
+        next(error);
     }
 };
 
@@ -68,9 +73,7 @@ const deleteTodo = async (req, res) => {
             message: `Deleted successfully`
         });
     } catch (error) {
-        return res.status(500).json({
-            error: 'Error on deleteTodo' + error
-        })
+        next(error);
     }
 };
 
