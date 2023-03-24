@@ -1,4 +1,4 @@
-const { createTodo, getTodo, updateTodo, deleteTodo } = require('../controllers/todo_controller');
+const { createTodo, getTodo, updateTodo, deleteTodo } = require('../controllers/todoController');
 
 const router = require('express').Router();
 

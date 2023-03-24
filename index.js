@@ -17,7 +17,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.use(notFound)
+
 
 
 
@@ -27,9 +27,9 @@ app.get('/app/v1', (req, res, next) => {
 });
 
 //CRUD routes
-app.use('/app/v1', require('./routes/todo_routes'));
+app.use('/app/v1', require('./routes/todoRoutes'));
 
-
+app.use(notFound)
 
 
 app.listen(3000, () => {

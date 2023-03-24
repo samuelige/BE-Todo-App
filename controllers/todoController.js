@@ -1,7 +1,7 @@
 const moment = require("moment/moment");
 const client = require("../db_config");
 
-const createTodo = async (req, res) => {
+const createTodo = async (req, res, next) => {
     const {todo} = req.body;
 
     if(!todo){
@@ -11,22 +11,14 @@ const createTodo = async (req, res) => {
     try {
         const created_on = moment(new Date());
         await client.query('CREATE TABLE IF NOT EXISTS "todos" ("id" SERIAL PRIMARY KEY,"todo" varchar(100), created_on DATE NOT NULL);');
-        await client.query('INSERT INTO todos(todo, created_on) values($1, $2)', [todo, created_on], (err, result) => {
-            if(!err){
-                return res.status(201).json({
-                    message: 'User created successfully!'
-                });
-            }
-            else { 
-                return res
-                .send({ success: false, message: err.message });
-            }
+        await client.query('INSERT INTO todos(todo, created_on) values($1, $2)', [todo, created_on]);
+
+        res.status(201).json({
+            message: 'User created successfully!'
         });
  
       } catch (error) {
-        return res.status(500).json({
-            error: 'Error on createTodo' + error
-        });
+        next(error);
     }
 };
 
@@ -48,9 +40,7 @@ const getTodo = async (req, res) => {
             data: queryResult
         });
     } catch (error) {
-        return res.status(500).json({
-            error: 'Error on getTodo' + error
-        })
+        next(error);
     }
 };
 
