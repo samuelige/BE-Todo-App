@@ -23,15 +23,16 @@ app.use(express.urlencoded({ extended: false }));
 
 
 //test route
-app.get('/app/v1', (req, res, next) => {
+app.get('/api/v1', (req, res, next) => {
     res.send('Hello World');
 });
 
 //CRUD routes
-app.use('/app/v1', require('./routes/todoRoutes'));
+app.use('/api/v1', require('./routes/todoRoutes'));
 
-app.use(notFound);
 app.use(errorHandler);
+app.use(notFound);
+
 
 
 app.listen(3000, () => {

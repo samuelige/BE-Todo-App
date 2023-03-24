@@ -74,11 +74,21 @@ const updateTodo = async (req, res) => {
 const deleteTodo = async (req, res) => {
     try {
         await client.query('CREATE TABLE IF NOT EXISTS "todos" ("id" SERIAL PRIMARY KEY,"todo" varchar(100), created_on DATE NOT NULL);');
-        await client.query('DELETE from todos WHERE id = $1', [req.params.id]);
+        
+        const request = await client.query(`SELECT * from todos WHERE id = $1`, [req.params.id]);
+        if(request.rows.length) {
+            await client.query('DELETE from todos WHERE id = $1', [req.params.id]);
+            return res.status(200).json({
+                message: `Deleted successfully`
+            });
+            
+        } else {
+            return res.status(400).json({
+                msg: `No item found with id : ${req.params.id}`
+            });
+        }
 
-        return res.status(200).json({
-            message: `Deleted successfully`
-        });
+        
     } catch (error) {
         next(error);
     }
