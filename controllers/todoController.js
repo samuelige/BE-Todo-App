@@ -14,7 +14,7 @@ const createTodo = async (req, res, next) => {
         await client.query('INSERT INTO todos(todo, created_on) values($1, $2)', [todo, created_on]);
 
         res.status(201).json({
-            message: 'User created successfully!'
+            message: 'Todo created successfully!'
         });
  
       } catch (error) {
@@ -81,7 +81,7 @@ const deleteTodo = async (req, res) => {
             return res.status(200).json({
                 message: `Deleted successfully`
             });
-            
+
         } else {
             return res.status(400).json({
                 msg: `No item found with id : ${req.params.id}`
