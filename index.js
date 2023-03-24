@@ -8,6 +8,7 @@ dotenv.config();
 // const notfoundMiddleware = require('./middleware/notfound');
 const connectDB = require('./db_config/database');
 const { notFound } = require('./middleware/notFound');
+const { errorHandler } = require('./middleware/errorHandler');
 
 
 const app = express();
@@ -29,7 +30,8 @@ app.get('/app/v1', (req, res, next) => {
 //CRUD routes
 app.use('/app/v1', require('./routes/todoRoutes'));
 
-app.use(notFound)
+app.use(notFound);
+app.use(errorHandler);
 
 
 app.listen(3000, () => {
